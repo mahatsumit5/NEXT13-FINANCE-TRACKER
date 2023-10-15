@@ -5,6 +5,7 @@ import Modal from "../Modal";
 import { financeContext } from "@/lib/store/finance-context";
 import { v4 } from "uuid";
 import { authContext } from "@/lib/store/auth-context";
+import { toast } from "react-toastify";
 
 export default function AddExpensesModal({ show, onClose }) {
   const { expenses, addExpenseItem, addExpenseCatagory } =
@@ -42,8 +43,9 @@ export default function AddExpensesModal({ show, onClose }) {
       setExpenseAmount("");
       setSelectedCatagory(null);
       onClose(false);
+      toast.success("Expenses Added");
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -54,8 +56,9 @@ export default function AddExpensesModal({ show, onClose }) {
     try {
       await addExpenseCatagory({ title, color, total: 0, uid: user.uid });
       setShowAddExp(false);
+      toast.success("Catagory Created");
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
   return (

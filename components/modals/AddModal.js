@@ -7,6 +7,7 @@ import Modal from "../Modal";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { currencyFormatter } from "@/lib/utils";
 import { authContext } from "@/lib/store/auth-context";
+import { toast } from "react-toastify";
 
 const AddModal = ({ setShowAddIncomeModal, showAddIncomeModal }) => {
   const { user } = useContext(authContext);
@@ -20,8 +21,9 @@ const AddModal = ({ setShowAddIncomeModal, showAddIncomeModal }) => {
   const deleteIncome = async (id) => {
     try {
       await removeIncomeItem(id);
+      toast.success("Income deleted");
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
   // handle add function
@@ -35,8 +37,9 @@ const AddModal = ({ setShowAddIncomeModal, showAddIncomeModal }) => {
     };
     try {
       await addIncomeItem(newIncome);
+      toast.success("Income Added");
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
     descriptionRef.current.value = "";
     amountRef.current.value = "";

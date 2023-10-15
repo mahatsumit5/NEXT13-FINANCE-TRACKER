@@ -74,7 +74,8 @@ export default function Home() {
         </div>
       </section>
       {/* chartjs */}
-      <section className="py-6">
+      <section className="py-6" id="stats">
+        <div id="stats" />
         <h3 className="text-2xl">Stats</h3>
         <div className="w-1/2 mx-auto">
           <Doughnut

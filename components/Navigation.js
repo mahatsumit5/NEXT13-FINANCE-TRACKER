@@ -27,7 +27,9 @@ export default function Nav() {
         {user && !loading && (
           <nav className="flex items-center gap-2">
             <div>
-              <ImStatsBars className="text-2xl" />
+              <a href="#stats">
+                <ImStatsBars className="text-2xl" />
+              </a>
             </div>
             <div>
               <button className="btn btn-danger" onClick={logout}>
