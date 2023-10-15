@@ -8,14 +8,18 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 import AddModal from "@/components/modals/AddModal";
 import { financeContext } from "@/lib/store/finance-context";
+import { authContext } from "@/lib/store/auth-context";
+
 import AddExpensesModal from "@/components/modals/AddExpensesModal";
 import ViewExpensesModal from "@/components/modals/ViewExpensesModal";
+import { SignIn } from "@/components/SignIn";
 
 export default function Home() {
   const [showAddIncomeModal, setShowAddIncomeModal] = useState(false);
   const [showExpenseModal, setShowExpenseModal] = useState(false);
   const [viewExpenseModal, setViewExpenseModal] = useState(false);
   const { expenses, income } = useContext(financeContext);
+  const { user, loading } = useContext(authContext);
   const [balance, setBalance] = useState(0);
   useEffect(() => {
     const newBalace =
@@ -27,6 +31,10 @@ export default function Home() {
       }, 0);
     setBalance(newBalace);
   }, [income, expenses]);
+
+  if (!user) {
+    return <SignIn />;
+  }
   return (
     <main className="container max-w-2xl px-6 mx-auto">
       <section className="py-3">
@@ -99,6 +107,7 @@ export default function Home() {
           show={showExpenseModal}
         />
       )}
+      {!user && <SignIn />}
     </main>
   );
 }

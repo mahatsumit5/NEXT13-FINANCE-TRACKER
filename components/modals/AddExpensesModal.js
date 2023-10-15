@@ -4,10 +4,13 @@ import { useContext, useRef, useState } from "react";
 import Modal from "../Modal";
 import { financeContext } from "@/lib/store/finance-context";
 import { v4 } from "uuid";
+import { authContext } from "@/lib/store/auth-context";
 
 export default function AddExpensesModal({ show, onClose }) {
   const { expenses, addExpenseItem, addExpenseCatagory } =
     useContext(financeContext);
+  const { user } = useContext(authContext);
+
   const [selectedCatagory, setSelectedCatagory] = useState(null);
   const [expenseAmount, setExpenseAmount] = useState(0);
   const [showAddExp, setShowAddExp] = useState(false);
@@ -49,7 +52,7 @@ export default function AddExpensesModal({ show, onClose }) {
     const title = titleRef.current.value;
     const color = colorRef.current.value;
     try {
-      await addExpenseCatagory({ title, color, total: 0 });
+      await addExpenseCatagory({ title, color, total: 0, uid: user.uid });
       setShowAddExp(false);
     } catch (error) {
       console.log(error);
@@ -87,12 +90,13 @@ export default function AddExpensesModal({ show, onClose }) {
           </div>
 
           {showAddExp && (
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap">
               <input
                 ref={titleRef}
                 type="text"
                 className="px-4 py-2 rounded-xl bg-slate-600"
                 placeholder="Enter title"
+                required
               />
               <label>Pick a color</label>
               <input ref={colorRef} type="color" className="w-10 h-8" />

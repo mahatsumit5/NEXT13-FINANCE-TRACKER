@@ -6,8 +6,11 @@ import Modal from "../Modal";
 // icons
 import { FaRegTrashAlt } from "react-icons/fa";
 import { currencyFormatter } from "@/lib/utils";
+import { authContext } from "@/lib/store/auth-context";
 
 const AddModal = ({ setShowAddIncomeModal, showAddIncomeModal }) => {
+  const { user } = useContext(authContext);
+  console.log(user.uid);
   const amountRef = useRef();
   const descriptionRef = useRef();
   const { income, addIncomeItem, removeIncomeItem } =
@@ -28,6 +31,7 @@ const AddModal = ({ setShowAddIncomeModal, showAddIncomeModal }) => {
       amount: +amountRef.current.value,
       description: descriptionRef.current.value,
       createdAt: new Date(),
+      uid: user.uid,
     };
     try {
       await addIncomeItem(newIncome);
