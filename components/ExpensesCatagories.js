@@ -29,11 +29,12 @@ const ExpensesCatagories = ({
       {/* Add expense  modal */}
       {viewExpenseModal && (
         <ViewExpensesModal
+          key={expense.id}
           onClose={setViewExpenseModal}
           show={viewExpenseModal}
           expense={expense}
         />
-      )}{" "}
+      )}
     </>
   );
 };

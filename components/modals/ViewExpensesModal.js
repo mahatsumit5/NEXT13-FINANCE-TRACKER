@@ -8,21 +8,19 @@ import { getExpenseByCat } from "@/lib/axios/axios";
 export default function ViewExpensesModal({ onClose, show, expense }) {
   const { deleteExpenseItem, deleteExpense } = useContext(financeContext);
   const [expenses, setExpenses] = useState([]);
-  console.log(expenses);
   const handleOnDelete = async (item) => {
-    try {
-      const updateitems = expense.items.filter((i) => i.id !== item.id);
-      const updatedExpenses = {
-        items: [...updateitems],
-        total: expense.total - item.amount,
-      };
-      deleteExpenseItem(expense.id, updatedExpenses);
-    } catch (error) {}
+    const remainingAmount = expense.total - item.amount;
+    const obj = {
+      id: expense.id,
+      amount: remainingAmount,
+    };
+    await deleteExpenseItem(item.id, obj);
   };
   //   delete expenses
   const handledeleteExpense = async (id) => {
     try {
       await deleteExpense(id);
+      onClose(false);
     } catch (error) {
       throw error;
     }
@@ -34,11 +32,14 @@ export default function ViewExpensesModal({ onClose, show, expense }) {
       setExpenses(expenses);
     }
     getExpenses();
-  }, [expense]);
+  }, [expense, show]);
   return (
     <Modal onClose={onClose} show={show}>
       <div className="flex items-center justify-between">
-        <h2 className="text-4xl capitalize">{expense.title}</h2>
+        <h2 className="text-4xl capitalize">
+          {expense.title} ${expense.total}
+        </h2>
+
         <button
           className="btn btn-danger"
           onClick={() => {

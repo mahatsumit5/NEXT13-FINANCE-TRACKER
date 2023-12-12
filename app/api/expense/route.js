@@ -1,5 +1,6 @@
 import {
   createExpense,
+  deleteExpenses,
   getExpenseByCat,
   updateCatagory,
 } from "@/lib/prisma/prismaClinet";
@@ -36,6 +37,22 @@ export async function GET(request) {
     return Response.json({
       status: "error",
       message: error.message,
+    });
+  }
+}
+export async function DELETE(req) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    const result = await deleteExpenses(id);
+    if (result.id) {
+      return Response.json({
+        status: "success",
+      });
+    }
+  } catch (error) {
+    return Response.json({
+      status: "error",
     });
   }
 }
