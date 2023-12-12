@@ -1,9 +1,15 @@
-import { createCatagory, getCatagories } from "@/lib/prisma/prismaClinet";
+import {
+  createCatagory,
+  getCatagories,
+  updateCatagory,
+} from "@/lib/prisma/prismaClinet";
 
 export async function POST(req) {
   try {
     const body = await req.json();
+    const { amount, catagoryId } = body;
     const result = await createCatagory(body);
+    await updateCatagory(catagoryId, amount);
     if (result?.id) {
       return Response.json({
         status: "success",
@@ -12,7 +18,7 @@ export async function POST(req) {
     }
     return Response.json({
       status: "fail",
-      msg: "创建失败，请检查输入是否正确！",
+      msg: "",
     });
   } catch (error) {
     return Response.json({

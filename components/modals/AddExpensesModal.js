@@ -26,20 +26,12 @@ export default function AddExpensesModal({ show, onClose }) {
     });
 
     const newExpense = {
-      color: expense.color,
-      title: expense.title,
       total: expense.total + +expenseAmount,
-      items: [
-        ...expense.items,
-        {
-          amount: +expenseAmount,
-          createdAt: new Date(),
-          id: v4(),
-        },
-      ],
+      catagoryId: selectedCatagory,
+      amount: +expenseAmount,
     };
     try {
-      await addExpenseItem(selectedCatagory, newExpense);
+      await addExpenseItem(newExpense);
       setExpenseAmount("");
       setSelectedCatagory(null);
       onClose(false);

@@ -23,8 +23,13 @@ model ExpenseCatagory {
   title String
   color String
   uid   String
-  total Int @default(0)
+  total Int    @default(0)
 }
-model Expense{
-  id              String     @id @default(uuid())
+
+model Expense {
+  id        String   @id @default(uuid())
+  amount    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  catagoryId String
 }
