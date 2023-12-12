@@ -1,4 +1,8 @@
-import { addNewIncome, getAllIncome } from "@/lib/prisma/prismaClinet";
+import {
+  addNewIncome,
+  deleteIncome,
+  getAllIncome,
+} from "@/lib/prisma/prismaClinet";
 import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
@@ -38,6 +42,24 @@ export async function GET(request) {
     Response.json({
       status: "error",
       message: error.message,
+    });
+  }
+}
+export async function DELETE(request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    console.log(id);
+    const income = await deleteIncome(id);
+    if (income.id) {
+      return Response.json({
+        status: "success",
+        message: "Delete successful",
+      });
+    }
+  } catch (error) {
+    return Response.json({
+      status: "error",
     });
   }
 }

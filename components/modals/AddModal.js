@@ -80,7 +80,7 @@ const AddModal = ({ setShowAddIncomeModal, showAddIncomeModal }) => {
       </form>
       <div className=" flex flex-col">
         <h3 className="text-2xl">Income History</h3>
-        {income.map(({ id, description, amount, createdAt }) => {
+        {income?.map(({ id, description, amount, createdAt }) => {
           return (
             <div key={id} className="flex justify-between items-center">
               <div>

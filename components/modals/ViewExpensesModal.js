@@ -1,11 +1,14 @@
-import { currencyFormatter } from "@/lib/utils";
+import { currencyFormatter, dateFormatter } from "@/lib/utils";
 import Modal from "../Modal";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { financeContext } from "@/lib/store/finance-context";
+import { getExpenseByCat } from "@/lib/axios/axios";
 
 export default function ViewExpensesModal({ onClose, show, expense }) {
   const { deleteExpenseItem, deleteExpense } = useContext(financeContext);
+  const [expenses, setExpenses] = useState([]);
+  console.log(expenses);
   const handleOnDelete = async (item) => {
     try {
       const updateitems = expense.items.filter((i) => i.id !== item.id);
@@ -24,6 +27,14 @@ export default function ViewExpensesModal({ onClose, show, expense }) {
       throw error;
     }
   };
+
+  useEffect(() => {
+    async function getExpenses() {
+      const { status, expenses } = await getExpenseByCat(expense.id);
+      setExpenses(expenses);
+    }
+    getExpenses();
+  }, [expense]);
   return (
     <Modal onClose={onClose} show={show}>
       <div className="flex items-center justify-between">
@@ -34,20 +45,18 @@ export default function ViewExpensesModal({ onClose, show, expense }) {
             handledeleteExpense(expense.id);
           }}
         >
-          {" "}
           Delete
         </button>
       </div>
       <div>
         <h3 className="my-4 text-2xl">Expense History</h3>
-        {expense.items.map((item) => {
+        {expenses.map((item) => {
           return (
-            <div key={item.id} className="flex items-center justify-between">
-              <small>
-                {item.createdAt.toMillis
-                  ? new Date(item.createdAt.toMillis()).toISOString()
-                  : item.createdAt.toDateString()}
-              </small>
+            <div
+              key={item.id}
+              className="flex items-center justify-between gap-3 mt-2"
+            >
+              <small>{dateFormatter(item.createdAt)}</small>
               <p>
                 {currencyFormatter(item.amount)}{" "}
                 <button

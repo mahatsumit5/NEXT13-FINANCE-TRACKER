@@ -19,17 +19,19 @@ model Income {
 }
 
 model ExpenseCatagory {
-  id    String @id @default(uuid())
-  title String
-  color String
-  uid   String
-  total Int    @default(0)
+  id       String    @id @default(uuid())
+  title    String
+  color    String
+  uid      String
+  total    Int       @default(0)
+  expenses Expense[]
 }
 
 model Expense {
-  id        String   @id @default(uuid())
-  amount    Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String          @id @default(uuid())
+  amount     Int
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  catagory   ExpenseCatagory @relation(fields: [catagoryId], references: [id])
   catagoryId String
 }
