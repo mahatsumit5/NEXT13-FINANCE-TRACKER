@@ -21,16 +21,16 @@ export default function Home() {
   const { expenses, income } = useContext(financeContext);
   const { user, loading } = useContext(authContext);
   const [balance, setBalance] = useState(0);
-  useEffect(() => {
-    const newBalace =
-      income.reduce((total, i) => {
-        return total + i.amount;
-      }, 0) -
-      expenses.reduce((total, e) => {
-        return total + e.total;
-      }, 0);
-    setBalance(newBalace);
-  }, [income, expenses]);
+  // useEffect(() => {
+  //   const newBalace =
+  //     income.reduce((total, i) => {
+  //       return total + i.amount;
+  //     }, 0) -
+  //     expenses.reduce((total, e) => {
+  //       return total + e.total;
+  //     }, 0);
+  //   setBalance(newBalace);
+  // }, [income, expenses]);
 
   if (!user) {
     return <SignIn />;

@@ -5,7 +5,7 @@ import Nav from "@/components/Navigation";
 import FinanceContextProvider from "@/lib/store/finance-context";
 import AuthContextProvider from "@/lib/store/auth-context";
 // react-toastify
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ["latin"] });
 

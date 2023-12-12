@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 
 const AddModal = ({ setShowAddIncomeModal, showAddIncomeModal }) => {
   const { user } = useContext(authContext);
-  console.log(user.uid);
   const amountRef = useRef();
   const descriptionRef = useRef();
   const { income, addIncomeItem, removeIncomeItem } =
@@ -32,7 +31,6 @@ const AddModal = ({ setShowAddIncomeModal, showAddIncomeModal }) => {
     const newIncome = {
       amount: +amountRef.current.value,
       description: descriptionRef.current.value,
-      createdAt: new Date(),
       uid: user.uid,
     };
     try {
@@ -87,7 +85,7 @@ const AddModal = ({ setShowAddIncomeModal, showAddIncomeModal }) => {
             <div key={id} className="flex justify-between items-center">
               <div>
                 <p className="font-semibold">{description}</p>
-                <small className="text-sm">{createdAt.toDateString()}</small>
+                <small className="text-sm">{createdAt}</small>
               </div>
 
               <p className="flex items-center gap-2">
